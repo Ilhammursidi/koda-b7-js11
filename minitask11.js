@@ -1,32 +1,44 @@
-// setTimeout(() => {
-//   console.log("John");
-// }, 1500);
-// setTimeout(() => {
-//   console.log("Ed");
-// }, 2000);
-// setTimeout(() => {
-//   console.log("jane");
-// }, 500);
-
-const data = new Promise((resolve, reject) => {
-  const isSuccess = false;
-  if (isSuccess) {
-    return reject("Gagal menampilkan nama");
-  }
-  return resolve(
+function showName(nama, delay) {
+  return new Promise((resolve, reject) => {
     setTimeout(() => {
-      console.log("jane");
-    }, 500),
-  );
-});
+      if (nama) {
+        resolve(nama);
+      } else {
+        reject("Nama tidak valid");
+      }
+    }, delay);
+  });
+}
 
-// .catch((reason)=>{
-//     console.log(`${reason}`)
-// })
+showName("Jane", 500)
+  .then((result) => {
+    console.log(result);
+    return showName("John", 1500);
+  })
+  .then((result) => {
+    console.log(result);
+    return showName("Ed", 2000);
+  })
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 
-// setTimeout(() => {
-//   console.log("John");
-// }, 1500),
-// setTimeout(() => {
-//   console.log("Ed");
-// }, 2000),
+async function tampilSemua() {
+  try {
+    const nama3 = await showName("Jane", 500);
+    console.log(nama3);
+
+    const nama1 = await showName("John", 1500);
+    console.log(nama1);
+
+    const nama2 = await showName("Ed", 2000);
+    console.log(nama2);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+tampilSemua();
